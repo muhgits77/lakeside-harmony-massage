@@ -1,0 +1,350 @@
+/* css/styles.css
+   Premium styles for Lakeside Harmony Massage — Bluegrass Digital Forge portfolio
+   Warm, trustworthy Kentucky Lake Cumberland wellness aesthetic
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --lake-blue: #2A5F6E;
+  --sage: #5C7C5D;
+  --earth: #B87C5C;
+  --cream: #F8F5F0;
+  --deep: #1E3F47;
+  --text: #2D3748;
+}
+
+/* Base */
+.tail-container {
+  font-family: 'Inter', system_ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.heading-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* Colors */
+.lake-text { color: var(--lake-blue); }
+.sage-text { color: var(--sage); }
+.earth-accent { color: var(--earth); }
+
+/* Premium backgrounds */
+.premium-bg { background-color: var(--cream); }
+
+.lake-gradient {
+  background: linear-gradient(135deg, var(--lake-blue) 0%, var(--deep) 100%);
+}
+
+.masssage-bg, .massage-bg {
+  background-image: linear-gradient(rgba(248, 245, 240, 0.90), rgba(248, 245, 240, 0.94)), url('../images/5.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Hero */
+.hero-bg {
+  background-size: cover;
+  background-position: center 28%;
+}
+
+/* Refined hero overlay for impact */
+.hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(30, 63, 71, 0.55) 0%,
+    rgba(30, 63, 71, 0.32) 38%,
+    rgba(30, 63, 71, 0.68) 68%,
+    rgba(30, 63, 71, 0.82) 100%
+  );
+}
+
+/* Navigation */
+.nav-link {
+  position: relative;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover { color: var(--lake-blue); }
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1.5px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--lake-blue);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover:after { width: 100%; }
+
+.nav-scrolled {
+  background-color: rgba(248, 245, 240, 0.96);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 1px 0 0 rgba(42, 95, 110, 0.06);
+}
+
+.nav-active {
+  color: var(--lake-blue);
+}
+
+/* Service Cards — Premium hover + animations */
+.service-card {
+  transition: transform 0.45s cubic-bezier(0.23, 1.0, 0.32, 1),
+              box-shadow 0.45s cubic-bezier(0.23, 1.0, 0.32, 1),
+              border-color 0.3s ease;
+  border: 1px solid #EDE7DB;
+  will-change: transform;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.12), 
+              0 10px 10px -6px rgb(0 0 0 / 0.08);
+  border-color: #D9D0BE;
+}
+
+.service-card .service-icon {
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.08) rotate(2deg);
+}
+
+.service-card .service-meta {
+  transition: color 0.3s ease;
+}
+
+.service-card:hover .service-meta {
+  color: var(--lake-blue);
+}
+
+/* Subtle premium lift micro-interaction on card content */
+.service-card:hover h3 {
+  color: var(--deep);
+}
+
+.service-card .cta-hint {
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.3s ease;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+}
+
+.service-card:hover .cta-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gallery */
+.gallery-img {
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), 
+              box-shadow 0.4s ease,
+              filter 0.3s ease;
+  will-change: transform;
+}
+
+.gallery-img:hover {
+  transform: scale(1.035);
+  box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.45);
+  filter: contrast(1.02) saturate(1.03);
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 1.5rem;
+  position: relative;
+}
+
+.gallery-item:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.08));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover:after {
+  opacity: 1;
+}
+
+/* Benefits & testimonial cards */
+.benefit-card {
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease, border-color 0.3s;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgb(42 95 110 / 0.08);
+  border-color: #D9D0BE;
+}
+
+.benefit-icon {
+  transition: transform 0.4s cubic-bezier(0.23,1.0,0.32,1);
+}
+
+.benefit-card:hover .benefit-icon {
+  transform: scale(1.1);
+}
+
+.testimonial-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -4px rgb(0 0 0 / 0.07);
+}
+
+/* Modals */
+.modal {
+  animation: premiumModalEnter 0.28s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes premiumModalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Mobile Menu Premium */
+#mobile-menu {
+  transition: all 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#mobile-menu:not(.hidden) {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-link {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.mobile-nav-link:hover {
+  padding-left: 1.25rem;
+  color: var(--lake-blue);
+}
+
+/* Scroll reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s cubic-bezier(0.23,1,0.32,1),
+              transform 0.7s cubic-bezier(0.23,1,0.32,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: all 0.55s cubic-bezier(0.23,1,0.32,1);
+}
+
+.reveal-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 110ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 155ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 200ms; }
+
+/* Stat / trust polish */
+.stat {
+  transition: all 0.4s ease;
+}
+
+/* Buttons */
+.premium-btn {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.premium-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 15px -3px rgb(42 95 110 / 0.25);
+}
+
+.premium-btn:active {
+  transform: scale(0.985);
+}
+
+/* Footer polish */
+.footer-strong {
+  font-size: 0.75rem;
+  letter-spacing: 0.25px;
+  color: #A89F8B;
+}
+
+/* Light glass + subtle grid */
+.light-glass {
+  background: rgba(255,255,255, 0.92);
+  backdrop-filter: blur(20px);
+}
+
+.subtle-grid {
+  background-image: 
+    linear-gradient(rgba(42, 95, 110, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 95, 110, 0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Form polish */
+input, select, textarea {
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Fast performance helpers */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Accessibility + focus */
+:focus-visible {
+  outline: 2px solid var(--lake-blue);
+  outline-offset: 2px;
+}
+
+/* Small screens hero tweaks */
+@media (max-width: 768px) {
+  .hero-bg {
+    background-attachment: scroll;
+  }
+  .section-header {
+    font-size: 2rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .service-card:hover,
+  .gallery-img:hover {
+    transform: none;
+  }
+}

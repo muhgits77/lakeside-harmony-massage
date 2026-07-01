@@ -1,31 +1,35 @@
-# Lakeside Harmony — Demo Site
+# Lakeside Harmony Massage Therapy — Premium Portfolio Demo
 
-Premium demo site for a fictional massage therapy business, Lakeside Harmony. This repository is a lightweight static site built for portfolio and demonstration purposes.
+A polished, client-ready static site for a fictional premium massage therapy studio located on Lake Cumberland in Jamestown, Kentucky.
 
-**Screenshot placeholders:** Add screenshots to the `screenshots/` folder and reference them here.
+**Built as a portfolio showcase by Bluegrass Digital Forge • Powered by Grok Build**
 
-## Features
-- Responsive layout (Tailwind via CDN)
-- Mobile menu, modals, gallery lightbox
-- Accessible focus management for modals
-- Smooth scrolling and navbar scroll effects
-- Basic PWA support (manifest + service worker)
-- Lazy-loading images and WebP suggestions
+This is a **fictional business** for demonstration and portfolio purposes only.
 
-## Local Setup
+## Key Upgrades (Premium Polish)
+- **Reliable images**: All 8 images guaranteed via proper relative paths, eager/lazy loading, no broken WebP references, aggressive Service Worker precaching.
+- **Hero**: Dramatically improved visual presence with refined gradients, typography, and Lake Cumberland serenity.
+- **Animations & UX**: Subtle premium CSS transitions, IntersectionObserver scroll reveals, enhanced service card hovers (lift + micro details), polished mobile menu (animated slide + icon toggle).
+- **Footer**: Clearly states “Demo by Bluegrass Digital Forge • Built with Grok Build • Fictional business for portfolio purposes only.”
+- **PWA & Performance**: v2 Service Worker with image-first caching, fast cache strategies, improved manifest, vercel headers for long-lived static assets.
+- **Accessibility**: Focus trapping, keyboard support, data-attribute driven interactions.
+- **Kentucky wellness vibe**: Warm trustworthy palette (Lake blue, sage green, earth clay, cream) preserved and elevated.
 
-1. Open the project folder in your editor.
-2. Serve locally (any static server). Example using Python 3 built-in server:
+## Local Setup (Ready to Run)
+
+From the project folder:
 
 ```bash
+# Python
 python3 -m http.server 8080
-# then open http://localhost:8080
+
+# or Node
+npx serve .
+
+# or any static server
 ```
 
-Or use `npx serve`:
-
-```bash
-npx serve .
+Open http://localhost:8080 — fully functional offline-ready PWA.
 ```
 
 ## Deploy (GitHub + Vercel)
@@ -74,5 +78,9 @@ npx vercel --prod
 
 Vercel will detect a static project and publish a production URL.
 
-## Credits
-Website Demo by Bluegrass Digital Forge • Built with Grok Build • Fictional business for portfolio purposes.
+## Credits & Attribution
+- Design & development by **Bluegrass Digital Forge**
+- Built with **Grok Build**
+- Fictional business for portfolio purposes only. All content, testimonials, and imagery are illustrative.
+
+**Warm, trustworthy local Kentucky Lake Cumberland wellness aesthetic** maintained for consistency across Bluegrass projects.

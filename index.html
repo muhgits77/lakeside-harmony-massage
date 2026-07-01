@@ -56,199 +56,34 @@
   }
   </script>
 
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind CSS via CDN (production note: consider self-hosting for ultimate perf) -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;500;600&amp;display=swap');
-    
-    :root {
-      --lake-blue: #2A5F6E;
-      --sage: #5C7C5D;
-      --earth: #B87C5C;
-      --cream: #F8F5F0;
-      --deep: #1E3F47;
-    }
+  <!-- Premium custom styles — fast load + PWA friendly -->
+  <link rel="stylesheet" href="css/styles.css">
 
-    .tail-container {
-      font-family: 'Inter', system_ui, sans-serif;
-    }
-    
-    .heading-serif {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-    }
-
-    .premium-bg {
-      background-color: #F8F5F0;
-    }
-
-    .lake-gradient {
-      background: linear-gradient(135deg, #2A5F6E 0%, #1E3F47 100%);
-    }
-
-    .section-header {
-      font-size: 2.25rem;
-      line-height: 1.1;
-    }
-
-    @media (min-width: 1024px) {
-      .section-header {
-        font-size: 2.75rem;
-      }
-    }
-
-    .nav-link {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .nav-link:hover {
-      color: #2A5F6E;
-    }
-
-    .service-card {
-      transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1), 
-                  box-shadow 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    
-    .service-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-
-    .gallery-img {
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                  box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .gallery-img:hover {
-      transform: scale(1.03);
-      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
-    }
-
-    .stat-card {
-      transition: all 0.3s ease;
-    }
-
-    .benefit-icon {
-      transition: transform 0.3s ease;
-    }
-    
-    .benefit-card:hover .benefit-icon {
-      transform: scale(1.08);
-    }
-
-    .nav-active {
-      color: #2A5F6E;
-      position: relative;
-    }
-    
-    .nav-active:after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 100%;
-      height: 1.5px;
-      background: #2A5F6E;
-      border-radius: 2px;
-    }
-
-    .modal {
-      animation: fadeInScale 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    @keyframes fadeInScale {
-      from {
-        opacity: 0;
-        transform: scale(0.96) translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    .smooth-scroll {
-      scroll-behavior: smooth;
-    }
-
-    .lake-text {
-      color: #2A5F6E;
-    }
-
-    .sage-text {
-      color: #5C7C5D;
-    }
-
-    .earth-accent {
-      color: #B87C5C;
-    }
-
-    .premium-shadow {
-      box-shadow: 0 10px 15px -3px rgb(42 95 110 / 0.08), 
-                  0 4px 6px -4px rgb(42 95 110 / 0.08);
-    }
-
-    .massage-bg {
-      background-image: linear-gradient(rgba(248, 245, 240, 0.88), rgba(248, 245, 240, 0.93)), url('images/5.jpg');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .hero-bg {
-      background-size: cover;
-      background-position: center 30%;
-      background-attachment: fixed;
-    }
-
-    .subtle-grid {
-      background-image: 
-        linear-gradient(rgba(42, 95, 110, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(42, 95, 110, 0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .trust-badge {
-      background: white;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.06);
-    }
-
-    .testimonial-card {
-      transition: all 0.3s ease;
-    }
-
-    .nav-scrolled {
-      background-color: rgba(248, 245, 240, 0.97);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 1px 0 0 rgba(42, 95, 110, 0.06);
-    }
-
-    .light-glass {
-      background: rgba(255,255,255, 0.92);
-      backdrop-filter: blur(20px);
-    }
-  </style>
+  <!-- Preload key assets for performance -->
+  <link rel="preload" href="images/1.jpg" as="image">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 </head>
-<body class="tail-container premium-bg text-[#2D3748] smooth-scroll antialiased">
+<body class="tail-container premium-bg text-[#2D3748] antialiased">
   <!-- NAV -->
   <nav id="nav" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-lg border-b border-[#EDE7DB]">
     <div class="max-w-screen-2xl mx-auto">
       <div class="px-6 lg:px-10 h-20 flex items-center justify-between">
         <!-- Logo -->
         <a href="#hero" class="flex items-center gap-x-3 group">
-          <div class="w-11 h-11 rounded-2xl lake-gradient flex items-center justify-center shadow-inner">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-11 h-11 rounded-2xl lake-gradient flex items-center justify-center shadow-inner ring-1 ring-white/20">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M12 21a9 9 0 01-9-9 9 9 0 019-9 9 9 0 019 9 9 9 0 01-9 9z"/>
             </svg>
           </div>
           <div>
             <div class="font-semibold tracking-tighter text-2xl text-[#1E3F47]">Lakeside Harmony</div>
-            <div class="text-[10px] font-medium text-[#5C7C5D] -mt-1">MASSAGE THERAPY</div>
+            <div class="text-[10px] font-medium text-[#5C7C5D] -mt-1 tracking-[1px]">MASSAGE THERAPY</div>
           </div>
         </a>
 
@@ -264,12 +99,12 @@
         <!-- CTA Buttons -->
         <div class="hidden md:flex items-center gap-x-3">
           <a href="tel:+12705550192" 
-             class="px-4 py-2.5 text-sm font-semibold flex items-center gap-x-2 rounded-3xl border border-[#D9D0BE] hover:bg-white transition-colors">
+             class="px-4 py-2.5 text-sm font-semibold flex items-center gap-x-2 rounded-3xl border border-[#D9D0BE] hover:bg-white hover:border-[#C8BFAE] transition-all">
             <i class="fa-solid fa-phone text-xs"></i>
             <span class="hidden lg:inline">(270) 555-0192</span>
           </a>
           <button onclick="openBookingModal()"
-                  class="px-6 py-2.5 bg-[#2A5F6E] hover:bg-[#1E3F47] transition-all text-white rounded-3xl text-sm font-semibold shadow-md flex items-center gap-x-2 active:scale-[0.985]">
+                  class="premium-btn px-6 py-2.5 bg-[#2A5F6E] hover:bg-[#1E3F47] transition-all text-white rounded-3xl text-sm font-semibold shadow-md flex items-center gap-x-2">
             <span>Book Now</span>
           </button>
         </div>
@@ -277,34 +112,34 @@
         <!-- Mobile -->
         <div class="md:hidden flex items-center gap-x-2">
           <button onclick="openBookingModal()" 
-                  class="px-5 py-2 bg-[#2A5F6E] text-white rounded-3xl text-sm font-semibold active:scale-[0.985]">
+                  class="px-5 py-2 bg-[#2A5F6E] text-white rounded-3xl text-sm font-semibold active:scale-[0.985] transition">
             Book
           </button>
           <button id="mobile-menu-btn"
-                    class="w-10 h-10 flex items-center justify-center text-[#2A5F6E] hover:bg-[#F1EBE0] rounded-2xl transition-colors"
-                    aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-            <i class="fa-solid fa-bars text-xl"></i>
+                    class="w-10 h-10 flex items-center justify-center text-[#2A5F6E] hover:bg-[#F1EBE0] active:bg-[#EDE7DB] rounded-2xl transition-colors"
+                    aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+            <i class="fa-solid fa-bars text-xl transition-transform duration-200" id="mobile-icon"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t bg-white" role="menu" aria-hidden="true">
-      <div class="px-6 py-6 flex flex-col gap-y-1 text-base font-medium">
-        <a href="#about" class="mobile-nav-link px-4 py-3 hover:bg-[#F8F5F0] rounded-2xl">About Sage</a>
-        <a href="#services" class="mobile-nav-link px-4 py-3 hover:bg-[#F8F5F0] rounded-2xl">Services</a>
-        <a href="#why" class="mobile-nav-link px-4 py-3 hover:bg-[#F8F5F0] rounded-2xl">Why Choose Us</a>
-        <a href="#gallery" class="mobile-nav-link px-4 py-3 hover:bg-[#F8F5F0] rounded-2xl">Gallery</a>
-        <a href="#book" class="mobile-nav-link px-4 py-3 hover:bg-[#F8F5F0] rounded-2xl">Book &amp; Contact</a>
+    <!-- Mobile Menu — Premium animated slide -->
+    <div id="mobile-menu" class="hidden md:hidden border-t bg-white/98 backdrop-blur-xl shadow-lg" role="menu" aria-hidden="true">
+      <div class="px-6 py-6 flex flex-col gap-y-0.5 text-[15px] font-medium">
+        <a href="#about" class="mobile-nav-link px-4 py-3.5 hover:bg-[#F8F5F0] rounded-2xl active:bg-[#F1EBE0]">About Sage</a>
+        <a href="#services" class="mobile-nav-link px-4 py-3.5 hover:bg-[#F8F5F0] rounded-2xl active:bg-[#F1EBE0]">Services</a>
+        <a href="#why" class="mobile-nav-link px-4 py-3.5 hover:bg-[#F8F5F0] rounded-2xl active:bg-[#F1EBE0]">Why Choose Us</a>
+        <a href="#gallery" class="mobile-nav-link px-4 py-3.5 hover:bg-[#F8F5F0] rounded-2xl active:bg-[#F1EBE0]">Gallery</a>
+        <a href="#book" class="mobile-nav-link px-4 py-3.5 hover:bg-[#F8F5F0] rounded-2xl active:bg-[#F1EBE0]">Book &amp; Contact</a>
         
-        <div class="pt-3 mt-2 border-t flex flex-col gap-y-2.5">
-          <a href="tel:+12705550192" class="flex items-center px-4 py-3 text-[#2A5F6E]">
+        <div class="pt-4 mt-3 border-t flex flex-col gap-y-2.5">
+          <a href="tel:+12705550192" class="flex items-center px-4 py-3 text-[#2A5F6E] hover:text-[#1E3F47]">
             <i class="fa-solid fa-phone mr-3"></i>
             <span>(270) 555-0192</span>
           </a>
-          <button onclick="openBookingModal(); closeMobileMenu()" 
-                  class="mx-4 mt-1 bg-[#2A5F6E] text-white py-3 rounded-3xl font-semibold">
+          <button onclick="openBookingModal(); window.closeMobileMenu && closeMobileMenu()" 
+                  class="mx-4 mt-1 bg-[#2A5F6E] hover:bg-[#1E3F47] active:bg-[#1A3741] text-white py-3.5 rounded-3xl font-semibold shadow transition">
             Book Appointment
           </button>
         </div>
@@ -312,77 +147,82 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO — Premium serene Lake Cumberland impact -->
   <header id="hero" class="relative min-h-[100dvh] pt-20 flex items-center justify-center overflow-hidden">
     <div class="absolute inset-0 z-0">
-      <picture>
-        <source type="image/webp" srcset="images/1.webp">
-        <img src="images/1.jpg" loading="eager" decoding="async"
-             alt="Serene Lake Cumberland at sunrise with calm water and peaceful shoreline, viewed from a luxury massage studio deck in Jamestown, KY"
-             class="w-full h-full object-cover">
-      </picture>
-      <div class="absolute inset-0 bg-gradient-to-b from-[#1E3F47]/60 via-[#1E3F47]/35 to-[#1E3F47]/75"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(#ffffff_0.5px,transparent_1px)] bg-[length:5px_5px] opacity-[0.06]"></div>
+      <!-- Reliable single image source — guaranteed to load -->
+      <img src="images/1.jpg" 
+           alt="Serene sunrise over Lake Cumberland, Kentucky — calm glassy water reflecting soft golden light, peaceful forested shoreline viewed from the deck of Lakeside Harmony Massage Therapy studio in Jamestown, KY. The signature tranquil setting for restorative wellness experiences."
+           class="w-full h-full object-cover" 
+           loading="eager" 
+           decoding="async"
+           fetchpriority="high">
+      <!-- Premium layered overlays for depth + text legibility -->
+      <div class="absolute inset-0 hero-overlay"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(#ffffff_0.6px,transparent_1.1px)] bg-[length:4px_4px] opacity-[0.055]"></div>
+      <!-- Subtle bottom vignette -->
+      <div class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#1E3F47]/50 to-transparent"></div>
     </div>
 
-    <div class="relative z-10 max-w-screen-2xl mx-auto px-6 lg:px-10 pt-12 pb-20 text-center text-white">
-      <div class="max-w-4xl mx-auto">
-        <!-- Trust micro -->
-        <div class="inline-flex items-center gap-x-2 rounded-full bg-white/15 backdrop-blur px-4 py-1 mb-6 text-xs tracking-[1px] font-semibold border border-white/20">
-          <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-          <span>JAMESTOWN, KENTUCKY • LAKE CUMBERLAND</span>
+    <div class="relative z-10 max-w-screen-2xl mx-auto px-6 lg:px-10 pt-10 pb-24 text-center text-white">
+      <div class="max-w-[860px] mx-auto">
+        <!-- Refined location badge -->
+        <div class="inline-flex items-center gap-x-2 rounded-full bg-white/10 backdrop-blur-md px-5 py-1.5 mb-7 text-xs tracking-[2px] font-semibold border border-white/25">
+          <span class="text-emerald-400">●</span>
+          <span>JAMESTOWN, KENTUCKY — LAKE CUMBERLAND</span>
         </div>
 
-        <h1 class="heading-serif text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tighter mb-4">
-          Restore Balance<br>at Lake Cumberland
+        <h1 class="heading-serif text-[46px] leading-[1.02] md:text-[64px] lg:text-[74px] tracking-[-2.6px] mb-5">
+          Restore your<br>balance at the lake.
         </h1>
         
-        <p class="max-w-xl mx-auto text-xl md:text-2xl text-white/90 font-light tracking-tight mb-8">
-          Therapeutic massage with licensed therapist<br class="hidden sm:block">
-          <span class="font-medium">Sarah “Sage” Thompson</span> in Jamestown, KY
+        <p class="max-w-lg mx-auto text-[17px] md:text-[21px] text-white/90 font-light tracking-tight mb-9">
+          Therapeutic massage by licensed therapist <span class="font-medium text-white">Sarah “Sage” Thompson</span><br class="hidden md:block"> in the heart of South Central Kentucky.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
           <button onclick="openBookingModal()"
-                  class="group w-full sm:w-auto px-9 py-4 bg-white text-[#1E3F47] hover:bg-amber-50 rounded-3xl font-semibold text-lg shadow-xl flex items-center justify-center gap-x-3 active:scale-[0.985] transition-all">
+                  class="group w-full sm:w-auto px-9 py-[17px] bg-white text-[#1E3F47] hover:bg-[#F8F5F0] rounded-3xl font-semibold text-[15.5px] shadow-xl flex items-center justify-center gap-x-3 active:scale-[0.985] transition-all premium-btn">
             <span>Book Your Session</span>
-            <i class="fa-solid fa-arrow-right group-active:translate-x-0.5 transition"></i>
+            <i class="fa-solid fa-arrow-right transition group-active:translate-x-0.5"></i>
           </button>
           
           <a href="#services"
-             class="w-full sm:w-auto px-8 py-4 border border-white/60 hover:bg-white/10 rounded-3xl text-white font-semibold text-lg flex items-center justify-center gap-x-2 transition-colors">
-            Explore Services
+             class="w-full sm:w-auto px-8 py-[17px] border border-white/50 hover:bg-white/10 hover:border-white/70 rounded-3xl text-white font-semibold text-[15.5px] flex items-center justify-center gap-x-2 transition">
+            Explore Signature Services
           </a>
         </div>
 
-        <div class="flex justify-center gap-x-8 text-xs uppercase tracking-widest text-white/60 mt-10">
-          <div>15+ YEARS</div>
-          <div>KY LICENSED</div>
-          <div>5.0 ★ RATED</div>
+        <div class="flex flex-wrap justify-center items-center gap-x-7 gap-y-1 text-xs uppercase tracking-[2.5px] text-white/55 mt-11">
+          <div>15+ YEARS EXPERIENCE</div>
+          <div class="hidden sm:block w-px h-2.5 bg-white/30"></div>
+          <div>KENTUCKY LICENSED LMT</div>
+          <div class="hidden sm:block w-px h-2.5 bg-white/30"></div>
+          <div>5.0 ★ GOOGLE RATED</div>
         </div>
       </div>
     </div>
 
-    <!-- Scroll indicator -->
+    <!-- Scroll cue -->
     <div class="absolute bottom-9 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
-      <div class="text-[10px] text-white/60 tracking-[2px] mb-1.5">SCROLL TO BEGIN</div>
-      <i class="fa-solid fa-chevron-down text-white/70 text-lg animate-bounce"></i>
+      <div class="text-[9px] text-white/50 tracking-[3px] mb-1">SCROLL TO DISCOVER</div>
+      <i class="fa-solid fa-chevron-down text-white/60 text-base animate-bounce"></i>
     </div>
   </header>
 
   <!-- TRUST BAR -->
   <div class="border-b bg-white">
-    <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 py-4 flex flex-wrap items-center justify-center gap-x-9 gap-y-2 text-sm">
+    <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 py-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm">
       <div class="flex items-center gap-x-2.5 text-[#475569]">
         <i class="fa-solid fa-award text-[#B87C5C]"></i>
         <span class="font-medium">Kentucky Licensed Massage Therapist #M-48192</span>
       </div>
       <div class="hidden md:block w-px h-3 bg-[#D9D0BE]"></div>
       <div class="flex items-center gap-x-3">
-          <div class="flex -space-x-1">
-          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/2.jpg" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Portrait of Sarah 'Sage' Thompson"></div>
-          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/6.jpg" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Client relaxation scene"></div>
-          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/4.jpg" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="Hot stones on a massage table"></div>
+        <div class="flex -space-x-1">
+          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/2.jpg" loading="lazy" decoding="async" width="24" height="24" class="w-full h-full object-cover" alt="Sarah 'Sage' Thompson, LMT"></div>
+          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/6.jpg" loading="lazy" decoding="async" width="24" height="24" class="w-full h-full object-cover" alt="Client in deep relaxation"></div>
+          <div class="w-6 h-6 rounded-full border border-white ring-1 ring-[#EDE7DB] overflow-hidden"><img src="images/4.jpg" loading="lazy" decoding="async" width="24" height="24" class="w-full h-full object-cover" alt="Hot stone therapy detail"></div>
         </div>
         <span class="font-medium text-[#475569]">Featured in <span class="font-semibold text-[#2A5F6E]">Kentucky Living</span></span>
       </div>
@@ -390,19 +230,19 @@
       <div class="text-[#5C7C5D] font-semibold flex items-center gap-1.5">
         <span>142 reviews</span> 
         <span class="text-amber-500">★★★★★</span>
-        <span class="font-normal text-xs text-[#64748B]">on Google</span>
+        <span class="font-normal text-xs text-[#64748B]">Google</span>
       </div>
     </div>
   </div>
 
   <!-- ABOUT SARAH -->
-  <section id="about" class="max-w-screen-2xl mx-auto px-6 lg:px-10 pt-20 pb-16">
+  <section id="about" class="max-w-screen-2xl mx-auto px-6 lg:px-10 pt-20 pb-16 reveal">
     <div class="grid lg:grid-cols-12 gap-x-14 gap-y-12 items-center">
       <!-- Portrait -->
       <div class="lg:col-span-5 relative">
         <div class="relative rounded-[3.5rem] overflow-hidden shadow-2xl aspect-[4/4.1] ring-1 ring-black/5">
-          <img src="images/2.jpg" loading="lazy" decoding="async"
-            alt="Sarah 'Sage' Thompson, licensed massage therapist and owner of Lakeside Harmony Massage Therapy. Warm, professional portrait in soft natural light with Lake Cumberland background in Jamestown, Kentucky."
+          <img src="images/2.jpg" loading="lazy" decoding="async" width="760" height="780"
+            alt="Sarah 'Sage' Thompson — warm, professional portrait of the licensed massage therapist and owner. Soft natural light, Lake Cumberland visible behind her at the Jamestown, Kentucky studio."
             class="w-full h-full object-cover">
           <div class="absolute bottom-0 inset-x-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"></div>
           <div class="absolute bottom-7 left-7 right-7 text-white">
@@ -413,7 +253,7 @@
         </div>
         
         <!-- Floating badge -->
-        <div class="absolute -bottom-4 -right-1 trust-badge px-4 py-2 rounded-2xl flex items-center gap-x-2.5 border border-[#EDE7DB]">
+        <div class="absolute -bottom-4 -right-1 bg-white px-4 py-2.5 rounded-2xl flex items-center gap-x-2.5 border border-[#EDE7DB] shadow">
           <div>
             <div class="text-xs font-medium text-[#64748B]">Practicing since</div>
             <div class="font-semibold text-[#1E3F47]">2010</div>
@@ -426,7 +266,7 @@
       <div class="lg:col-span-7">
         <div class="uppercase text-xs tracking-[2.5px] font-semibold text-[#B87C5C] mb-3">MY STORY</div>
         
-        <h2 class="heading-serif text-[#1E3F47] section-header mb-6 tracking-tight leading-none">
+        <h2 class="heading-serif text-[#1E3F47] text-[42px] md:text-[46px] leading-none tracking-[-1.6px] mb-6">
           Healing hands,<br>rooted in Kentucky.
         </h2>
 
@@ -472,62 +312,58 @@
   </section>
 
   <!-- PHILOSOPHY -->
-  <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 pb-20">
+  <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 pb-20 reveal">
     <div class="massage-bg rounded-[3rem] px-8 lg:px-14 py-12 lg:py-14 border border-[#EDE7DB]">
       <div class="max-w-3xl">
         <div class="flex items-center gap-x-3 text-[#B87C5C] mb-4">
           <i class="fa-solid fa-water"></i>
           <span class="uppercase text-xs tracking-[3px] font-semibold">THE LAKESIDE HARMONY PHILOSOPHY</span>
         </div>
-        <blockquote class="text-2xl lg:text-[27px] leading-tight font-medium text-[#1E3F47] tracking-tight">
+        <blockquote class="text-[22px] lg:text-[27px] leading-tight font-medium text-[#1E3F47] tracking-tight">
           “Touch is a language. The lake taught me how to listen — to the body, the breath, and the quiet rhythm underneath it all.”
         </blockquote>
-        <div class="mt-5 text-[#475569] font-medium">— Sage Thompson</div>
+        <div class="mt-5 text-[#475569] font-medium">— Sage Thompson, LMT</div>
       </div>
     </div>
   </div>
 
   <!-- SERVICES -->
-  <section id="services" class="max-w-screen-2xl mx-auto px-6 lg:px-10 pb-20">
+  <section id="services" class="max-w-screen-2xl mx-auto px-6 lg:px-10 pb-20 reveal">
     <div class="flex justify-between items-end mb-9">
       <div>
         <div class="uppercase text-xs tracking-[2.5px] text-[#B87C5C] font-semibold mb-1">EXPERT CARE</div>
-        <h2 class="heading-serif text-[#1E3F47] text-4xl tracking-tighter">Signature Services</h2>
+        <h2 class="heading-serif text-[#1E3F47] text-4xl tracking-[-1.5px]">Signature Services</h2>
       </div>
       <a href="#book" class="hidden lg:inline-flex text-sm items-center font-semibold text-[#2A5F6E] hover:text-[#1E3F47]">
         VIEW ALL PRICING <i class="ml-2 fa-solid fa-arrow-right"></i>
       </a>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-      <!-- Service Cards -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 reveal-stagger">
       <!-- Swedish -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(0)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="0">
         <div class="flex justify-between items-start">
           <div>
             <span class="inline-block px-3 py-px rounded-full bg-[#E8F0E9] text-[#5C7C5D] text-[10px] font-semibold tracking-wider">MOST POPULAR</span>
           </div>
-          <i class="fa-solid fa-spa text-[#B87C5C] text-2xl"></i>
+          <i class="service-icon fa-solid fa-spa text-[#B87C5C] text-2xl"></i>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Swedish Relaxation</h3>
           <div class="text-[#64748B] text-sm mt-1">Classic full-body therapeutic massage</div>
         </div>
         <div class="mt-auto pt-7 flex items-baseline justify-between text-sm">
-          <div>
-            <span class="font-semibold text-xl text-[#1E3F47]">60 / 90 min</span>
-          </div>
-          <div class="text-right">
-            <span class="font-semibold">$95 / $135</span>
-          </div>
+          <div><span class="font-semibold text-xl text-[#1E3F47]">60 / 90 min</span></div>
+          <div class="text-right"><span class="font-semibold">$95 / $135</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Long, flowing strokes • Deep calm • Lake lavender infusion</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Deep Tissue -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(1)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="1">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-hand-rock text-[#2A5F6E] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-hand-rock text-[#2A5F6E] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Deep Tissue Therapy</h3>
@@ -538,12 +374,13 @@
           <div class="text-right"><span class="font-semibold">$110 / $155</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Myofascial release • Chronic pain • Posture &amp; injury recovery</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Prenatal -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(2)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="2">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-baby text-[#5C7C5D] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-baby text-[#5C7C5D] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Prenatal Massage</h3>
@@ -554,12 +391,13 @@
           <div class="text-right"><span class="font-semibold">$100 / $130</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Side-lying techniques • Swelling relief • KY certified prenatal</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Sports -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(3)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="3">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-running text-[#2A5F6E] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-running text-[#2A5F6E] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Sports &amp; Recovery</h3>
@@ -570,12 +408,13 @@
           <div class="text-right"><span class="font-semibold">$105 / $150</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Cumberland Lake athletes • Range of motion • Injury prevention</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Hot Stone -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(4)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="4">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-fire text-[#B87C5C] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-fire text-[#B87C5C] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Hot Stone Therapy</h3>
@@ -586,12 +425,13 @@
           <div class="text-right"><span class="font-semibold">$125</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Deep penetrating warmth • Muscle release • Indigenous stones</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Couples -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(5)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="5">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-heart text-[#B87C5C] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-heart text-[#B87C5C] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Couples Retreat</h3>
@@ -602,12 +442,13 @@
           <div class="text-right"><span class="font-semibold">$190 / $270</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Shared studio • Champagne • Lake view post-massage</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
 
       <!-- Aromatherapy -->
-      <div class="service-card bg-white border border-[#EDE7DB] rounded-3xl p-6 flex flex-col" onclick="showServiceModal(6)">
+      <div class="service-card group bg-white rounded-3xl p-6 flex flex-col cursor-pointer" data-service-index="6">
         <div class="flex justify-between">
-          <div><i class="fa-solid fa-leaf text-[#5C7C5D] text-2xl"></i></div>
+          <div><i class="service-icon fa-solid fa-leaf text-[#5C7C5D] text-2xl"></i></div>
         </div>
         <div class="mt-5">
           <h3 class="font-semibold text-xl text-[#1E3F47]">Aromatherapy Ritual</h3>
@@ -618,6 +459,7 @@
           <div class="text-right"><span class="font-semibold">$100 / $145</span></div>
         </div>
         <div class="pt-5 text-xs text-[#64748B] border-t mt-4">Wild mint • Cedar • Local lavender • Personal blend</div>
+        <div class="cta-hint pt-2 text-[#B87C5C] font-medium">View details →</div>
       </div>
     </div>
 
@@ -631,11 +473,11 @@
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-10">
       <div class="grid lg:grid-cols-12 gap-x-14 gap-y-12">
         <!-- Benefits -->
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7 reveal">
           <div class="uppercase text-xs font-semibold tracking-[2px] text-[#B87C5C] mb-3">THE LAKESIDE DIFFERENCE</div>
           <h2 class="heading-serif text-[#1E3F47] text-4xl tracking-tight leading-none mb-7">Feel the difference in every session.</h2>
           
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid sm:grid-cols-2 gap-4 reveal-stagger">
             <div class="benefit-card group flex gap-5 p-5 rounded-3xl border border-[#EDE7DB]">
               <div class="benefit-icon shrink-0 w-11 h-11 rounded-2xl bg-[#E8F4F0] flex items-center justify-center text-[#2A5F6E]">
                 <i class="fa-solid fa-hand-holding-heart fa-lg"></i>
@@ -679,7 +521,7 @@
         </div>
 
         <!-- Testimonials -->
-        <div class="lg:col-span-5">
+        <div class="lg:col-span-5 reveal">
           <div class="mb-5 flex justify-between items-center">
             <div>
               <div class="uppercase text-xs font-semibold tracking-[2px] text-[#B87C5C]">REAL STORIES</div>
@@ -689,7 +531,6 @@
           </div>
 
           <div class="space-y-4">
-            <!-- Testimonial 1 -->
             <div class="testimonial-card p-5 rounded-3xl bg-[#F8F5F0] border border-[#EDE7DB]">
               <div class="flex gap-1 text-amber-400 mb-2.5">★★★★★</div>
               <p class="text-[14.5px] italic leading-snug">"Sage is truly gifted. My lower back pain from years on the water is finally manageable. I drive from Somerset just for her sessions."</p>
@@ -699,7 +540,6 @@
               </div>
             </div>
             
-            <!-- Testimonial 2 -->
             <div class="testimonial-card p-5 rounded-3xl bg-[#F8F5F0] border border-[#EDE7DB]">
               <div class="flex gap-1 text-amber-400 mb-2.5">★★★★★</div>
               <p class="text-[14.5px] italic leading-snug">"My prenatal sessions with Sage were the highlight of my pregnancy. So gentle and intuitive. She used the most beautiful local oils."</p>
@@ -709,7 +549,6 @@
               </div>
             </div>
 
-            <!-- Testimonial 3 -->
             <div class="testimonial-card p-5 rounded-3xl bg-[#F8F5F0] border border-[#EDE7DB]">
               <div class="flex gap-1 text-amber-400 mb-2.5">★★★★★</div>
               <p class="text-[14.5px] italic leading-snug">"Best deep tissue I’ve ever had. The hot stone massage with the river stones is next-level. I feel brand new every time."</p>
@@ -725,7 +564,7 @@
   </section>
 
   <!-- GALLERY -->
-  <section id="gallery" class="max-w-screen-2xl mx-auto px-6 lg:px-10 py-20">
+  <section id="gallery" class="max-w-screen-2xl mx-auto px-6 lg:px-10 py-20 reveal">
     <div class="flex justify-between items-end mb-8">
       <div>
         <div class="text-xs font-semibold tracking-[2.5px] text-[#B87C5C]">THE EXPERIENCE</div>
@@ -734,30 +573,29 @@
       <div class="text-xs hidden md:block text-[#64748B]">Click any photo to enlarge</div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
-      <!-- Gallery images from custom generated -->
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(0)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(0)">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 reveal-stagger">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="0">
         <img src="images/5.jpg" loading="lazy" decoding="async" alt="Peaceful interior of Lakeside Harmony massage studio in Jamestown, KY featuring a treatment table, warm wood tones, and large windows overlooking Lake Cumberland." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(1)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(1)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="1">
         <img src="images/4.jpg" loading="lazy" decoding="async" alt="Close-up of therapeutic massage using smooth heated stones from Lake Cumberland on oiled skin, performed by expert hands in soft natural lighting." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(2)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(2)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="2">
         <img src="images/3.jpg" loading="lazy" decoding="async" alt="Tranquil wooden dock extending into calm Lake Cumberland at golden hour. Peaceful lakeside nature scene near Jamestown, Kentucky." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(3)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(3)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="3">
         <img src="images/7.jpg" loading="lazy" decoding="async" alt="Premium couples massage experience with two side-by-side tables in a serene lakeside studio with soft candlelight and elegant natural decor." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(4)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(4)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="4">
         <img src="images/8.jpg" loading="lazy" decoding="async" alt="Beautiful aromatherapy ritual setup with local Kentucky botanicals including wild mint, cedar, and lavender essential oils beside smooth river stones." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(5)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(5)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="5">
         <img src="images/6.jpg" loading="lazy" decoding="async" alt="Serene client in deep relaxation on a massage table covered in white linen, soft natural window light, with peaceful Lake Cumberland visible outside the studio." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(6)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(6)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="6">
         <img src="images/1.jpg" loading="lazy" decoding="async" alt="Serene panoramic view of Lake Cumberland at sunrise. The stunning, peaceful setting that welcomes clients to Lakeside Harmony in Jamestown, KY." class="gallery-img w-full h-full object-cover">
       </div>
-      <div class="group aspect-video rounded-3xl overflow-hidden ring-1 ring-black/5 shadow-md" onclick="openLightbox(7)" role="button" tabindex="0" onkeydown="if(event.key==='Enter') openLightbox(7)">
+      <div class="group gallery-item aspect-video ring-1 ring-black/5 shadow-md cursor-pointer" role="button" tabindex="0" data-gallery-index="7">
         <img src="images/2.jpg" loading="lazy" decoding="async" alt="Sarah 'Sage' Thompson, owner and lead therapist at Lakeside Harmony, in a warm professional portrait with Lake Cumberland behind her." class="gallery-img w-full h-full object-cover">
       </div>
     </div>
@@ -922,13 +760,13 @@
   <div class="bg-[#2A5F6E]">
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 py-7 flex flex-col md:flex-row gap-y-3 items-center justify-between text-white">
       <div class="font-medium text-lg">Ready to feel restored?</div>
-      <button onclick="openBookingModal()" class="px-8 py-3 bg-white text-[#1E3F47] hover:bg-[#F8F5F0] rounded-3xl text-sm font-semibold flex items-center gap-x-2 active:scale-[0.985]">
+      <button onclick="openBookingModal()" class="px-8 py-3 bg-white text-[#1E3F47] hover:bg-[#F8F5F0] rounded-3xl text-sm font-semibold flex items-center gap-x-2 active:scale-[0.985] premium-btn">
         <span>BOOK YOUR APPOINTMENT TODAY</span>
       </button>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER — Strengthened for Bluegrass Digital Forge -->
   <footer class="bg-[#1E3F47] text-[#C9C1AF] text-sm">
     <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 pt-14 pb-9">
       <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-y-10">
@@ -963,19 +801,21 @@
             <a href="#" class="hover:text-white transition" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
           </div>
           <div class="mt-8 text-xs leading-relaxed text-[#867E69]">
-            Website Demo by <a href="https://bluegrassdigitalforge.live" target="_blank" class="underline hover:text-white">Bluegrass Digital Forge</a> • Built with Grok Build • Fictional business for portfolio purposes.<br>
-            View live at <a href="https://bluegrassdigitalforge.live" target="_blank" class="underline hover:text-white">bluegrassdigitalforge.live</a>
+            <strong class="text-white/90">Demo by Bluegrass Digital Forge • Built with Grok Build • Fictional business for portfolio purposes only.</strong>
           </div>
         </div>
       </div>
     </div>
     
-    <div class="border-t border-white/10 text-xs text-[#867E69] py-4">
-      <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-y-1 text-center md:text-left">
-        <div>© <span id="year"></span> Lakeside Harmony Massage Therapy. All rights reserved.</div>
-        <div class="flex gap-x-5">
+    <div class="border-t border-white/10 py-4 bg-[#172F37]">
+      <div class="max-w-screen-2xl mx-auto px-6 lg:px-10 flex flex-col md:flex-row justify-between items-center gap-y-1.5 text-center md:text-left text-xs">
+        <div class="footer-strong">© <span id="year"></span> Lakeside Harmony Massage Therapy — Fictional demo site.</div>
+        <div class="footer-strong">
+          Demo by <span class="text-white/80 font-medium">Bluegrass Digital Forge</span> • Built with Grok Build • Fictional business for portfolio purposes only.
+        </div>
+        <div class="flex gap-x-5 text-[#867E69]">
           <a href="#" class="hover:text-white">Privacy</a>
-          <a href="#" class="hover:text-white">Cancellation Policy</a>
+          <a href="#" class="hover:text-white">Cancellation</a>
           <a href="#" class="hover:text-white">Accessibility</a>
         </div>
       </div>

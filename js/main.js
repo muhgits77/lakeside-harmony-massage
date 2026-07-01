@@ -1,6 +1,11 @@
 /* js/main.js
-   Handles mobile menu, modals, lightbox, forms, navbar scroll, smooth scrolling,
-   accessibility focus management, and registers a simple service worker.
+   Premium interactions for Lakeside Harmony — Bluegrass Digital Forge portfolio
+   - Enhanced mobile menu with icon transition
+   - Scroll-reveal animations (IntersectionObserver)
+   - Reliable data-driven service & gallery wiring (no inline onclick dependency)
+   - Modal focus trap + keyboard
+   - Forms & toast
+   - Strong PWA + SW registration
 */
 
 (function () {
@@ -10,14 +15,14 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  // Environment
   const isDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-  const log = (...args) => { if (isDev) console.log('[main.js]', ...args); };
+  const log = (...args) => { if (isDev) console.log('[Lakeside]', ...args); };
 
   // Elements
   const nav = $('#nav');
   const mobileBtn = $('#mobile-menu-btn');
   const mobileMenu = $('#mobile-menu');
+  const mobileIcon = $('#mobile-icon');
   const serviceModal = $('#service-modal');
   const bookingModal = $('#booking-modal');
   const lightbox = $('#lightbox');
@@ -27,74 +32,110 @@
   const servicePriceEl = $('#modal-service-price');
   const serviceDescEl = $('#modal-service-desc');
   const serviceBenefitsEl = $('#modal-service-benefits');
+  const serviceIconEl = $('#modal-service-icon');
   const toast = $('#success-toast');
   const toastMessage = $('#toast-message');
 
-  // Keep track of last focused element for modals
   let lastFocused = null;
+  let untrap = null;
 
-  // Services data used to populate service modal
+  // Services (matches cards)
   const services = [
-    { name: 'Swedish Relaxation', price: '60 / 90 min — $95 / $135', icon: '🕊️', desc: 'Classic full-body therapeutic massage.', benefits: ['Long, flowing strokes', 'Deep calm', 'Lake lavender infusion'] },
-    { name: 'Deep Tissue Therapy', price: '60 / 90 min — $110 / $155', icon: '💪', desc: 'Targeted relief for chronic tension.', benefits: ['Myofascial release', 'Chronic pain relief', 'Posture & injury recovery'] },
-    { name: 'Prenatal Massage', price: '60 / 75 min — $100 / $130', icon: '🤰', desc: 'Gentle, supportive care for moms-to-be.', benefits: ['Side-lying techniques', 'Swelling relief', 'Certified prenatal care'] },
-    { name: 'Sports & Recovery', price: '60 / 90 min — $105 / $150', icon: '🏃‍♂️', desc: 'Performance & active lifestyle recovery.', benefits: ['Range of motion', 'Injury prevention', 'Performance tuning'] },
-    { name: 'Hot Stone Therapy', price: '75 min — $125', icon: '🔥', desc: 'Heated river stones for deep warming.', benefits: ['Deep penetrating warmth', 'Muscle release', 'Restorative heat'] },
-    { name: 'Couples Retreat', price: '60 / 90 min — $190 / $270', icon: '❤️', desc: 'Side-by-side massage experience.', benefits: ['Shared studio', 'Champagne', 'Lake view'] },
-    { name: 'Aromatherapy Ritual', price: '60 / 90 min — $100 / $145', icon: '🌿', desc: 'Custom botanical blends.', benefits: ['Wild mint', 'Cedar & lavender', 'Personalized blends'] }
+    { name: 'Swedish Relaxation', price: '60 / 90 min — $95 / $135', icon: '🕊️', desc: 'Classic full-body therapeutic massage using long, flowing strokes and Lake Cumberland lavender infusion.', benefits: ['Long, flowing strokes', 'Deep calm', 'Lake lavender infusion'] },
+    { name: 'Deep Tissue Therapy', price: '60 / 90 min — $110 / $155', icon: '💪', desc: 'Targeted relief for chronic tension and postural issues with myofascial release.', benefits: ['Myofascial release', 'Chronic pain relief', 'Posture & injury recovery'] },
+    { name: 'Prenatal Massage', price: '60 / 75 min — $100 / $130', icon: '🤰', desc: 'Gentle, supportive care for expectant mothers with certified prenatal techniques.', benefits: ['Side-lying techniques', 'Swelling relief', 'Certified prenatal care'] },
+    { name: 'Sports & Recovery', price: '60 / 90 min — $105 / $150', icon: '🏃‍♂️', desc: 'Performance-focused recovery massage for active lifestyles and lake sports.', benefits: ['Range of motion', 'Injury prevention', 'Performance tuning'] },
+    { name: 'Hot Stone Therapy', price: '75 min — $125', icon: '🔥', desc: 'Heated Cumberland river stones for deep penetrating warmth and muscle release.', benefits: ['Deep penetrating warmth', 'Muscle release', 'Restorative heat'] },
+    { name: 'Couples Retreat', price: '60 / 90 min — $190 / $270', icon: '❤️', desc: 'Side-by-side experience in our lakeside studio with post-treatment champagne.', benefits: ['Shared studio', 'Champagne', 'Lake view'] },
+    { name: 'Aromatherapy Ritual', price: '60 / 90 min — $100 / $145', icon: '🌿', desc: 'Custom botanical blends using native Kentucky wild mint, cedar & lavender.', benefits: ['Wild mint', 'Cedar & lavender', 'Personalized blends'] }
   ];
 
-  // MOBILE MENU
+  // =====================
+  // MOBILE MENU (Premium)
+  // =====================
   function toggleMobileMenu() {
     const isOpen = !mobileMenu.classList.contains('hidden');
-    if (isOpen) closeMobileMenu(); else openMobileMenu();
+    if (isOpen) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
   }
 
   function openMobileMenu() {
     lastFocused = document.activeElement;
     mobileMenu.classList.remove('hidden');
     mobileMenu.setAttribute('aria-hidden', 'false');
-    mobileBtn.setAttribute('aria-expanded', 'true');
-    mobileMenu.setAttribute('role', 'menu');
-    // focus first link
+    if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'true');
+    if (mobileIcon) {
+      mobileIcon.classList.remove('fa-bars');
+      mobileIcon.classList.add('fa-times');
+    }
+    // focus first
     const first = mobileMenu.querySelector('a, button');
-    if (first) first.focus();
+    if (first) setTimeout(() => first.focus(), 40);
   }
 
   function closeMobileMenu() {
     mobileMenu.classList.add('hidden');
     mobileMenu.setAttribute('aria-hidden', 'true');
-    mobileBtn.setAttribute('aria-expanded', 'false');
+    if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+    if (mobileIcon) {
+      mobileIcon.classList.remove('fa-times');
+      mobileIcon.classList.add('fa-bars');
+    }
     if (lastFocused) lastFocused.focus();
   }
 
   window.closeMobileMenu = closeMobileMenu;
 
-  // NAVBAR SCROLL EFFECT
+  if (mobileBtn) mobileBtn.addEventListener('click', toggleMobileMenu);
+
+  // Close on outside click + escape handled globally
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu || !mobileBtn || mobileMenu.classList.contains('hidden')) return;
+    if (!mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  // =====================
+  // NAVBAR SCROLL
+  // =====================
   function onScroll() {
-    if (window.scrollY > 40) nav.classList.add('nav-scrolled'); else nav.classList.remove('nav-scrolled');
+    if (!nav) return;
+    if (window.scrollY > 38) {
+      nav.classList.add('nav-scrolled');
+    } else {
+      nav.classList.remove('nav-scrolled');
+    }
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // SMOOTH SCROLL for anchor links
+  // =====================
+  // SMOOTH SCROLL + AUTO CLOSE MOBILE
+  // =====================
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
     const href = a.getAttribute('href');
-    if (href === '#' || href === '#!') return;
+    if (!href || href === '#' || href === '#!') return;
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // close mobile menu if open
-      if (!mobileMenu.classList.contains('hidden')) closeMobileMenu();
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) closeMobileMenu();
     }
   });
 
-  // MODAL FOCUS MANAGEMENT
-  function trapFocus(modal) {
-    const focusable = $$('a[href], button, textarea, input, select', modal).filter(n => !n.hasAttribute('disabled'));
+  // =====================
+  // FOCUS TRAP
+  // =====================
+  function trapFocus(modalEl) {
+    const focusable = $$('a[href], button:not([disabled]), textarea, input:not([disabled]), select', modalEl);
     if (!focusable.length) return () => {};
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -107,225 +148,285 @@
           e.preventDefault(); first.focus();
         }
       } else if (e.key === 'Escape') {
-        // close whichever modal is open
-        try {
-          if (!serviceModal.classList.contains('hidden')) closeServiceModal();
-          if (!bookingModal.classList.contains('hidden')) closeBookingModal();
-          if (!lightbox.classList.contains('hidden')) closeLightbox();
-        } catch (err) { log('Error closing modal via Escape', err); }
+        closeAnyOpenModal();
       }
     }
-
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }
 
+  function closeAnyOpenModal() {
+    if (serviceModal && !serviceModal.classList.contains('hidden')) closeServiceModal();
+    if (bookingModal && !bookingModal.classList.contains('hidden')) closeBookingModal();
+    if (lightbox && !lightbox.classList.contains('hidden')) closeLightbox();
+  }
+
+  // =====================
   // SERVICE MODAL
+  // =====================
   window.showServiceModal = function (idx) {
     const s = services[idx] || services[0];
-    serviceNameEl.textContent = s.name;
-    servicePriceEl.textContent = s.price;
-    serviceDescEl.textContent = s.desc;
-    serviceBenefitsEl.innerHTML = s.benefits.map(b => `<div>• ${b}</div>`).join('');
+    if (serviceNameEl) serviceNameEl.textContent = s.name;
+    if (servicePriceEl) servicePriceEl.textContent = s.price;
+    if (serviceDescEl) serviceDescEl.textContent = s.desc;
+    if (serviceBenefitsEl) {
+      serviceBenefitsEl.innerHTML = s.benefits.map(b => `<div class="flex items-center gap-2"><span class="text-[#B87C5C]">•</span> ${b}</div>`).join('');
+    }
+    if (serviceIconEl) serviceIconEl.textContent = s.icon || '🌿';
+
     serviceModal.classList.remove('hidden');
     serviceModal.setAttribute('aria-hidden', 'false');
-    serviceModal.setAttribute('role', 'dialog');
-    serviceModal.setAttribute('aria-modal', 'true');
     lastFocused = document.activeElement;
-    serviceModal.querySelector('button, [tabindex] , input, select')?.focus();
-    window._untrap = trapFocus(serviceModal);
-    log('Opened service modal', s.name);
+
+    const first = serviceModal.querySelector('button');
+    if (first) first.focus();
+    untrap = trapFocus(serviceModal);
+    log('Service modal opened:', s.name);
   };
 
   window.closeServiceModal = function () {
+    if (!serviceModal) return;
     serviceModal.classList.add('hidden');
     serviceModal.setAttribute('aria-hidden', 'true');
-    serviceModal.removeAttribute('role');
-    serviceModal.removeAttribute('aria-modal');
-    if (window._untrap) window._untrap();
+    if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
-    log('Closed service modal');
   };
 
-  // BOOKING MODAL
+  window.bookFromServiceModal = function () {
+    const name = serviceNameEl ? serviceNameEl.textContent : '';
+    closeServiceModal();
+    // Open booking and preselect
+    setTimeout(() => {
+      openBookingModal();
+      const select = document.getElementById('service') || document.getElementById('q-service');
+      if (select) {
+        const match = Array.from(select.options).find(o => o.text.includes(name.split(' ')[0]));
+        if (match) select.value = match.value;
+      }
+    }, 160);
+  };
+
+  // =====================
+  // BOOKING MODALS
+  // =====================
   window.openBookingModal = function () {
+    if (!bookingModal) return;
     bookingModal.classList.remove('hidden');
     bookingModal.setAttribute('aria-hidden', 'false');
-    bookingModal.setAttribute('role', 'dialog');
-    bookingModal.setAttribute('aria-modal', 'true');
     lastFocused = document.activeElement;
-    bookingModal.querySelector('input, select, button')?.focus();
-    window._untrap = trapFocus(bookingModal);
-    log('Opened booking modal');
+    const firstField = bookingModal.querySelector('input, select');
+    if (firstField) setTimeout(() => firstField.focus(), 30);
+    untrap = trapFocus(bookingModal);
   };
 
   window.closeBookingModal = function () {
+    if (!bookingModal) return;
     bookingModal.classList.add('hidden');
     bookingModal.setAttribute('aria-hidden', 'true');
-    bookingModal.removeAttribute('role');
-    bookingModal.removeAttribute('aria-modal');
-    if (window._untrap) window._untrap();
+    if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
-    log('Closed booking modal');
   };
 
-  // BOOK FROM SERVICE MODAL (populate booking form)
-  window.bookFromServiceModal = function () {
-    const name = serviceNameEl.textContent || '';
-    const select = document.getElementById('service');
-    if (select) {
-      // try to select the first option that contains the service name
-      const opt = Array.from(select.options).find(o => o.text.includes(name));
-      if (opt) select.value = opt.value;
-    }
-    closeServiceModal();
-    openBookingModal();
-  };
-
+  // =====================
   // LIGHTBOX
-  const galleryImages = $$('img.gallery-img').map(img => ({ src: img.getAttribute('src'), alt: img.getAttribute('alt') }));
+  // =====================
+  const galleryImages = [
+    { src: 'images/5.jpg', alt: 'Peaceful interior of Lakeside Harmony massage studio overlooking Lake Cumberland' },
+    { src: 'images/4.jpg', alt: 'Close-up hot stone therapy with Lake Cumberland river stones' },
+    { src: 'images/3.jpg', alt: 'Tranquil Lake Cumberland dock at golden hour' },
+    { src: 'images/7.jpg', alt: 'Couples massage experience in serene lakeside studio' },
+    { src: 'images/8.jpg', alt: 'Aromatherapy ritual with Kentucky botanicals and river stones' },
+    { src: 'images/6.jpg', alt: 'Client in deep relaxation with lake view' },
+    { src: 'images/1.jpg', alt: 'Serene sunrise on Lake Cumberland from the studio' },
+    { src: 'images/2.jpg', alt: 'Sarah Sage Thompson, LMT — owner and lead therapist' }
+  ];
 
   window.openLightbox = function (idx) {
-    const item = galleryImages[idx] || galleryImages[0] || { src: '', alt: '' };
+    const item = galleryImages[idx] || galleryImages[0];
+    if (!lightboxImg || !lightbox) return;
     lightboxImg.src = item.src;
-    lightboxImg.alt = item.alt || 'Gallery image';
-    lightboxCaption.textContent = item.alt || '';
+    lightboxImg.alt = item.alt;
+    if (lightboxCaption) lightboxCaption.textContent = item.alt || '';
     lightbox.classList.remove('hidden');
     lightbox.setAttribute('aria-hidden', 'false');
-    lightbox.setAttribute('role', 'dialog');
-    lightbox.setAttribute('aria-modal', 'true');
     lastFocused = document.activeElement;
-    lightbox.querySelector('button')?.focus();
-    window._untrap = trapFocus(lightbox);
-    log('Opened lightbox', item.src);
+    const closeBtn = lightbox.querySelector('button');
+    if (closeBtn) closeBtn.focus();
+    untrap = trapFocus(lightbox);
   };
 
   window.closeLightbox = function () {
+    if (!lightbox || !lightboxImg) return;
     lightbox.classList.add('hidden');
     lightbox.setAttribute('aria-hidden', 'true');
     lightboxImg.src = '';
-    lightbox.removeAttribute('role');
-    lightbox.removeAttribute('aria-modal');
-    if (window._untrap) window._untrap();
+    if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
-    log('Closed lightbox');
   };
 
-  // FORMS: show toast on success
+  // =====================
+  // FORMS + TOAST
+  // =====================
   function showToast(message = 'Request received — we will be in touch!') {
+    if (!toast || !toastMessage) return;
     toastMessage.textContent = message;
     toast.classList.remove('hidden');
     toast.setAttribute('aria-hidden', 'false');
     setTimeout(() => {
       toast.classList.add('hidden');
       toast.setAttribute('aria-hidden', 'true');
-    }, 4500);
+    }, 4600);
   }
 
   window.handleBookingSubmit = function (e) {
     e.preventDefault();
-    const form = e.target;
-    // pretend to submit; in production integrate with server or form service
     showToast('Thanks — your booking request was sent. We’ll confirm shortly.');
+    const form = e.target;
     form.reset();
     closeBookingModal();
   };
 
   window.handleQuickBooking = function (e) {
     e.preventDefault();
-    const form = e.target;
     showToast('Quick booking request sent — thank you!');
-    form.reset();
+    e.target.reset();
     closeBookingModal();
   };
 
-  // Wire up gallery images to openLightbox by index
-  try {
-    const galleryImgs = $$('img.gallery-img');
-    galleryImgs.forEach((img, i) => {
-      let parent = img.closest('[role="button"]');
-      if (!parent) parent = img.parentElement;
-      // remove inline onclick to avoid duplicates
-      try { img.removeAttribute('onclick'); } catch (e) {}
-      img.setAttribute('data-gallery-index', String(i));
-      // click on image
-      img.addEventListener('click', (ev) => { ev.preventDefault(); openLightbox(i); });
-      img.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') openLightbox(i); });
-      // if parent should act as button, wire it too
-      if (parent && parent !== img) {
-        parent.setAttribute('role', 'button');
-        parent.setAttribute('tabindex', '0');
-        parent.addEventListener('click', (ev) => { ev.preventDefault(); openLightbox(i); });
-        parent.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') openLightbox(i); });
+  // =====================
+  // WIRING: DATA-DRIVEN (ROBUST)
+  // =====================
+  function wireServiceCards() {
+    const cards = $$('.service-card');
+    cards.forEach((card) => {
+      const idx = parseInt(card.getAttribute('data-service-index') || '0', 10);
+      // Remove old inline handlers if any
+      card.onclick = null;
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        showServiceModal(idx);
+      });
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          showServiceModal(idx);
+        }
+      });
+      // Accessibility
+      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+      if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
+      if (!card.hasAttribute('aria-label')) {
+        const title = card.querySelector('h3');
+        if (title) card.setAttribute('aria-label', 'View details for ' + title.textContent);
       }
     });
-    log('Gallery wired:', galleryImgs.length, 'items');
-  } catch (err) { log('Error wiring gallery images', err); }
+    log('Wired', cards.length, 'service cards');
+  }
 
-  // Wire service cards to open service modal with correct index
-  try {
-    const cards = $$('.service-card');
-    cards.forEach((card, idx) => {
-      // remove inline onclick if present
-      try { card.removeAttribute('onclick'); } catch (e) {}
-      card.setAttribute('data-service-index', String(idx));
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', (e) => { e.preventDefault(); showServiceModal(idx); });
-      card.addEventListener('keydown', (e) => { if (e.key === 'Enter') showServiceModal(idx); });
+  function wireGallery() {
+    const items = $$('[data-gallery-index]');
+    items.forEach((el) => {
+      const idx = parseInt(el.getAttribute('data-gallery-index'), 10);
+      el.onclick = null;
+      el.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        openLightbox(idx);
+      });
+      el.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') openLightbox(idx);
+      });
+      if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
     });
-    log('Service cards wired:', cards.length, 'items');
-  } catch (err) { log('Error wiring service cards', err); }
+    log('Wired', items.length, 'gallery items');
+  }
 
-  // Ensure booking forms use our handlers (in case inline attributes are removed)
-  try {
+  function wireForms() {
     const bookingForm = document.getElementById('booking-form');
     if (bookingForm) {
-      bookingForm.removeEventListener('submit', window.handleBookingSubmit);
+      bookingForm.onsubmit = null;
       bookingForm.addEventListener('submit', window.handleBookingSubmit);
     }
     const quickForm = document.getElementById('quick-booking-form');
     if (quickForm) {
-      quickForm.removeEventListener('submit', window.handleQuickBooking);
+      quickForm.onsubmit = null;
       quickForm.addEventListener('submit', window.handleQuickBooking);
     }
-    log('Booking forms wired');
-  } catch (err) { log('Error wiring booking forms', err); }
-
-  // Global Escape: close any open modal
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      try {
-        if (!serviceModal.classList.contains('hidden')) closeServiceModal();
-        if (!bookingModal.classList.contains('hidden')) closeBookingModal();
-        if (!lightbox.classList.contains('hidden')) closeLightbox();
-      } catch (err) { log('Error in global Escape handler', err); }
-    }
-  });
-
-  // set footer year
-  (function setYear() {
-    const y = new Date().getFullYear();
-    const el = document.getElementById('year');
-    if (el) el.textContent = y;
-  })();
-
-  // Mobile menu button
-  if (mobileBtn) mobileBtn.addEventListener('click', toggleMobileMenu);
-
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!mobileMenu || !mobileBtn) return;
-    if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
-      closeMobileMenu();
-    }
-  });
-
-  // register simple service worker for offline + asset caching
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+    log('Forms wired');
   }
 
-  // expose toggle for debugging
-  window.toggleMobileMenu = toggleMobileMenu;
+  // =====================
+  // SCROLL REVEAL (Premium subtle animations)
+  // =====================
+  function initScrollReveals() {
+    const reveals = $$('.reveal, .reveal-stagger');
+    if (!('IntersectionObserver' in window) || reveals.length === 0) {
+      // Fallback: show everything
+      reveals.forEach(r => r.classList.add('visible'));
+      return;
+    }
 
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => io.observe(el));
+    log('Scroll reveals initialized');
+  }
+
+  // =====================
+  // GLOBAL KEYBOARD
+  // =====================
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAnyOpenModal();
+  });
+
+  // =====================
+  // YEAR + INIT
+  // =====================
+  (function setYear() {
+    const y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+  })();
+
+  function initAll() {
+    // Wire interactive elements safely (data attrs)
+    wireServiceCards();
+    wireGallery();
+    wireForms();
+
+    // Scroll animations
+    initScrollReveals();
+
+    // PWA — robust service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => log('SW registered:', reg.scope))
+        .catch(err => log('SW registration skipped:', err));
+    }
+
+    // Optional: close mobile on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        closeMobileMenu();
+      }
+    }, { passive: true });
+
+    // Expose a couple of helpers for console/demo
+    window.Lakeside = { showServiceModal, openBookingModal, openLightbox };
+
+    log('Lakeside Harmony premium demo initialized — Bluegrass Digital Forge');
+  }
+
+  // Boot
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
 })();

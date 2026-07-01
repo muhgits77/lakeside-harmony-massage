@@ -1,32 +1,17 @@
 # Deploy
 
-Follow these exact steps to create a GitHub repository and deploy to Vercel from your terminal.
-
-1) Initialize repo and commit
+Polished premium portfolio version — ready for production deployment.
 
 ```bash
-git init
-git branch -M main
 git add .
-git commit -m "Initial demo site by Bluegrass Digital Forge"
+git commit -m "Premium client-ready polish: reliable images, PWA v2, animations, Bluegrass Digital Forge footer"
+git push
 ```
 
-2) Create GitHub repo and push
+Then:
 
 ```bash
-# using GitHub CLI (recommended)
-gh repo create YOUR_USERNAME/lakeside-harmony --public --source=. --remote=origin --push
-
-# or manually create the repo on github.com and then:
-git remote add origin https://github.com/YOUR_USERNAME/REPO.git
-git push -u origin main
-```
-
-3) Deploy to Vercel
-
-```bash
-npx vercel login
 npx vercel --prod
 ```
 
-Vercel will provide a production URL after deployment.
+All images, CSS, JS, and SW are production-optimized for fast loads and offline capability.
