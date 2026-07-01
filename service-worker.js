@@ -1,14 +1,14 @@
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3-premium';
 const CACHE_NAME = `lakeside-harmony-${CACHE_VERSION}`;
 
-// Core assets + all images for reliable offline / fast loads
+// Core assets + optimized WebP images + icons for ultra fast loads + offline
 const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
   '/css/styles.css',
   '/js/main.js',
-  // All images for guaranteed loading + PWA
+  // All original fallbacks
   '/images/1.jpg',
   '/images/2.jpg',
   '/images/3.jpg',
@@ -16,7 +16,55 @@ const ASSETS = [
   '/images/5.jpg',
   '/images/6.jpg',
   '/images/7.jpg',
-  '/images/8.jpg'
+  '/images/8.jpg',
+  '/images/hero.jpg',
+  // Optimized WebPs (main + responsive)
+  '/images/hero.webp',
+  '/images/hero-480w.webp',
+  '/images/hero-768w.webp',
+  '/images/hero-1024w.webp',
+  '/images/hero-1280w.webp',
+  '/images/1.webp',
+  '/images/1-480w.webp',
+  '/images/1-768w.webp',
+  '/images/1-1024w.webp',
+  '/images/1-1280w.webp',
+  '/images/2.webp',
+  '/images/2-360w.webp',
+  '/images/2-480w.webp',
+  '/images/2-640w.webp',
+  '/images/2-864w.webp',
+  '/images/3.webp',
+  '/images/3-480w.webp',
+  '/images/3-768w.webp',
+  '/images/3-1024w.webp',
+  '/images/3-1280w.webp',
+  '/images/4.webp',
+  '/images/4-480w.webp',
+  '/images/4-768w.webp',
+  '/images/4-1024w.webp',
+  '/images/5.webp',
+  '/images/5-480w.webp',
+  '/images/5-768w.webp',
+  '/images/5-1024w.webp',
+  '/images/5-1280w.webp',
+  '/images/6.webp',
+  '/images/6-480w.webp',
+  '/images/6-768w.webp',
+  '/images/6-1024w.webp',
+  '/images/7.webp',
+  '/images/7-480w.webp',
+  '/images/7-768w.webp',
+  '/images/7-1024w.webp',
+  '/images/7-1280w.webp',
+  '/images/8.webp',
+  '/images/8-480w.webp',
+  '/images/8-768w.webp',
+  '/images/8-1024w.webp',
+  // PWA icons
+  '/images/icon-192.png',
+  '/images/icon-384.png',
+  '/images/apple-touch-icon.png'
 ];
 
 self.addEventListener('install', (event) => {

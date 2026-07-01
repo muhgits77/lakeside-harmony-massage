@@ -1,11 +1,13 @@
 /* js/main.js
    Premium interactions for Lakeside Harmony — Bluegrass Digital Forge portfolio
-   - Enhanced mobile menu with icon transition
-   - Scroll-reveal animations (IntersectionObserver)
-   - Reliable data-driven service & gallery wiring (no inline onclick dependency)
+   - Mobile-first, buttery interactions, perfect touch targets
+   - Enhanced mobile menu
+   - Scroll-reveal + subtle micro animations
+   - Testimonials carousel (auto, touch friendly)
+   - Data-driven service & gallery + improved lightbox (arrows + keyboard nav)
    - Modal focus trap + keyboard
-   - Forms & toast
-   - Strong PWA + SW registration
+   - Booking form: premium fake success UX + loading states
+   - Strong PWA + offline ready
 */
 
 (function () {
@@ -38,6 +40,7 @@
 
   let lastFocused = null;
   let untrap = null;
+  let currentLightboxIndex = 0;
 
   // Services (matches cards)
   const services = [
@@ -231,27 +234,35 @@
   // LIGHTBOX
   // =====================
   const galleryImages = [
-    { src: 'images/5.jpg', alt: 'Peaceful interior of Lakeside Harmony massage studio overlooking Lake Cumberland' },
-    { src: 'images/4.jpg', alt: 'Close-up hot stone therapy with Lake Cumberland river stones' },
-    { src: 'images/3.jpg', alt: 'Tranquil Lake Cumberland dock at golden hour' },
-    { src: 'images/7.jpg', alt: 'Couples massage experience in serene lakeside studio' },
-    { src: 'images/8.jpg', alt: 'Aromatherapy ritual with Kentucky botanicals and river stones' },
-    { src: 'images/6.jpg', alt: 'Client in deep relaxation with lake view' },
-    { src: 'images/1.jpg', alt: 'Serene sunrise on Lake Cumberland from the studio' },
-    { src: 'images/2.jpg', alt: 'Sarah Sage Thompson, LMT — owner and lead therapist' }
+    { src: 'images/5.jpg', webp: 'images/5-1024w.webp', alt: 'Realistic interior of peaceful massage therapy studio overlooking Lake Cumberland — treatment table with white linens, warm wood tones, soft lighting' },
+    { src: 'images/4.jpg', webp: 'images/4-1024w.webp', alt: 'Close-up hot stone therapy with Lake Cumberland river stones' },
+    { src: 'images/3.jpg', webp: 'images/3-1024w.webp', alt: 'Tranquil Lake Cumberland dock at golden hour' },
+    { src: 'images/7.jpg', webp: 'images/7-1024w.webp', alt: 'Couples massage experience in serene lakeside studio' },
+    { src: 'images/8.jpg', webp: 'images/8-1024w.webp', alt: 'Aromatherapy ritual with Kentucky botanicals and river stones' },
+    { src: 'images/6.jpg', webp: 'images/6-1024w.webp', alt: 'Client in deep relaxation with lake view' },
+    { src: 'images/1.jpg', webp: 'images/1-1024w.webp', alt: 'Serene sunrise on Lake Cumberland from the studio' },
+    { src: 'images/2.jpg', webp: 'images/2-640w.webp', alt: 'Sarah \'Sage\' Thompson, LMT — warm professional portrait with Lake Cumberland in background' }
+  ];
+
+  const testimonials = [
+    { quote: "Sage is truly gifted. My lower back pain from years on the water is finally manageable. I drive from Somerset just for her sessions.", name: "— Michael R.", detail: "Lake Cumberland fisherman" },
+    { quote: "My prenatal sessions with Sage were the highlight of my pregnancy. So gentle and intuitive. She used the most beautiful local oils.", name: "— Laura & Thomas P.", detail: "Jamestown" },
+    { quote: "Best deep tissue I’ve ever had. The hot stone massage with the river stones is next-level. I feel brand new every time.", name: "— Jenna T.", detail: "Russell Springs" },
+    { quote: "The couples retreat was magical. We left feeling completely restored. The lake view and attention to every detail made it unforgettable.", name: "— David & Mia S.", detail: "Lexington, KY" }
   ];
 
   window.openLightbox = function (idx) {
     const item = galleryImages[idx] || galleryImages[0];
     if (!lightboxImg || !lightbox) return;
-    lightboxImg.src = item.src;
+    lightboxImg.src = item.webp || item.src;
     lightboxImg.alt = item.alt;
     if (lightboxCaption) lightboxCaption.textContent = item.alt || '';
     lightbox.classList.remove('hidden');
     lightbox.setAttribute('aria-hidden', 'false');
+    currentLightboxIndex = idx;
     lastFocused = document.activeElement;
     const closeBtn = lightbox.querySelector('button');
-    if (closeBtn) closeBtn.focus();
+    if (closeBtn) setTimeout(() => closeBtn.focus(), 30);
     untrap = trapFocus(lightbox);
   };
 
@@ -264,8 +275,51 @@
     if (lastFocused) lastFocused.focus();
   };
 
+  // Lightbox arrow nav helpers
+  function lightboxNext() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+    const item = galleryImages[currentLightboxIndex];
+    if (lightboxImg) lightboxImg.src = item.webp || item.src;
+    if (lightboxCaption) lightboxCaption.textContent = item.alt || '';
+  }
+  function lightboxPrev() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+    const item = galleryImages[currentLightboxIndex];
+    if (lightboxImg) lightboxImg.src = item.webp || item.src;
+    if (lightboxCaption) lightboxCaption.textContent = item.alt || '';
+  }
+
+  // Keyboard nav for lightbox
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox || lightbox.classList.contains('hidden')) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); lightboxNext(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); lightboxPrev(); }
+  });
+
+  function enhanceLightbox() {
+    if (!lightbox) return;
+    const container = lightbox.querySelector('.max-w-\\[1100px\\]');
+    if (!container) return;
+    container.style.position = 'relative';
+
+    const prev = document.createElement('button');
+    prev.setAttribute('aria-label', 'Previous image');
+    prev.className = 'hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 items-center justify-center bg-white/90 hover:bg-white active:bg-white text-[#1E3F47] w-10 h-10 rounded-2xl shadow-lg z-10';
+    prev.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+    prev.onclick = (ev) => { ev.stopImmediatePropagation(); lightboxPrev(); };
+
+    const next = document.createElement('button');
+    next.setAttribute('aria-label', 'Next image');
+    next.className = 'hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 items-center justify-center bg-white/90 hover:bg-white active:bg-white text-[#1E3F47] w-10 h-10 rounded-2xl shadow-lg z-10';
+    next.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+    next.onclick = (ev) => { ev.stopImmediatePropagation(); lightboxNext(); };
+
+    container.appendChild(prev);
+    container.appendChild(next);
+  }
+
   // =====================
-  // FORMS + TOAST
+  // FORMS + PREMIUM FAKE SUCCESS FLOW (conversion focused UX)
   // =====================
   function showToast(message = 'Request received — we will be in touch!') {
     if (!toast || !toastMessage) return;
@@ -275,22 +329,57 @@
     setTimeout(() => {
       toast.classList.add('hidden');
       toast.setAttribute('aria-hidden', 'true');
-    }, 4600);
+    }, 4800);
+  }
+
+  // Premium success UX: elegant toast + success banner + auto close
+  function showBookingSuccess(formEl) {
+    // Show gorgeous toast first
+    showToast('Thank you. Your booking request was received. Confirmation sent.');
+
+    // Add a beautiful temporary success banner above form
+    const banner = document.createElement('div');
+    banner.className = 'mb-5 p-4 rounded-3xl bg-[#E8F4F0] border border-[#B8D3C8] flex gap-3 items-start text-sm';
+    banner.innerHTML = `
+      <div class="mt-0.5"><i class="fa-solid fa-check-circle text-[#2A5F6E] text-xl"></i></div>
+      <div>
+        <div class="font-semibold text-[#1E3F47]">Request confirmed</div>
+        <div class="text-[#475569]">We sent a confirmation to your email. We will reach out within 2 hours.</div>
+        <div class="font-mono text-[10px] mt-1 text-[#5C7C5D]">LH-${Date.now().toString().slice(-9)}</div>
+      </div>`;
+    const parent = formEl.parentNode;
+    parent.insertBefore(banner, formEl);
+
+    setTimeout(() => {
+      closeBookingModal();
+      setTimeout(() => banner.remove(), 240);
+    }, 1850);
   }
 
   window.handleBookingSubmit = function (e) {
     e.preventDefault();
-    showToast('Thanks — your booking request was sent. We’ll confirm shortly.');
     const form = e.target;
+    // Fake loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="opacity-75">SENDING REQUEST...</span>';
+    }
     form.reset();
-    closeBookingModal();
+    setTimeout(() => {
+      showBookingSuccess(form);
+    }, 680);
   };
 
   window.handleQuickBooking = function (e) {
     e.preventDefault();
-    showToast('Quick booking request sent — thank you!');
-    e.target.reset();
-    closeBookingModal();
+    const form = e.target;
+    const btns = form.querySelectorAll('button');
+    btns.forEach(b => { b.disabled = true; });
+    form.reset();
+    setTimeout(() => {
+      showBookingSuccess(form);
+    }, 620);
   };
 
   // =====================
@@ -356,6 +445,106 @@
   }
 
   // =====================
+  // TESTIMONIALS CAROUSEL — Subtle, calming, auto + manual
+  // =====================
+  let carouselTimer = null;
+  let currentSlide = 0;
+
+  function initTestimonialsCarousel() {
+    const track = document.getElementById('testimonial-track');
+    const dotsContainer = document.getElementById('testimonial-dots');
+    const carousel = document.getElementById('testimonial-carousel');
+    if (!track || !dotsContainer || !carousel) return;
+
+    // Build slides
+    track.innerHTML = testimonials.map((t, i) => `
+      <div class="min-w-full px-6 py-6 text-sm" data-slide="${i}">
+        <div class="flex gap-1 text-amber-400 mb-3">★★★★★</div>
+        <p class="italic leading-snug text-[#475569]">"${t.quote}"</p>
+        <div class="flex items-center gap-3 mt-4">
+          <div class="font-semibold text-[#1E3F47]">${t.name}</div>
+          <div class="text-xs px-2 py-px bg-white border border-[#EDE7DB] rounded-full text-[#64748B]">${t.detail}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Build dots
+    dotsContainer.innerHTML = testimonials.map((_, i) => 
+      `<button class="w-2 h-2 rounded-full transition-all ${i===0 ? 'bg-[#5C7C5D] w-5' : 'bg-[#C9C1AF]'}" data-dot="${i}" aria-label="Go to testimonial ${i+1}"></button>`
+    ).join('');
+
+    const slides = track.children;
+    const dots = dotsContainer.querySelectorAll('button');
+
+    function goToSlide(idx) {
+      currentSlide = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((d, i) => {
+        if (i === idx) {
+          d.classList.add('bg-[#5C7C5D]', 'w-5');
+          d.classList.remove('bg-[#C9C1AF]', 'w-2');
+        } else {
+          d.classList.remove('bg-[#5C7C5D]', 'w-5');
+          d.classList.add('bg-[#C9C1AF]', 'w-2');
+        }
+      });
+    }
+
+    function nextSlide() {
+      goToSlide( (currentSlide + 1) % testimonials.length );
+    }
+
+    // Click dots
+    dots.forEach((dot, i) => dot.addEventListener('click', () => {
+      goToSlide(i);
+      resetAuto();
+    }));
+
+    // Buttons
+    const prevBtn = document.getElementById('prev-testimonial');
+    const nextBtn = document.getElementById('next-testimonial');
+    if (prevBtn) prevBtn.addEventListener('click', () => { goToSlide( (currentSlide - 1 + testimonials.length) % testimonials.length ); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAuto(); });
+
+    // Auto-advance (serene, slow)
+    function startAuto() {
+      stopAuto();
+      carouselTimer = setInterval(nextSlide, 5200);
+    }
+    function stopAuto() { if (carouselTimer) { clearInterval(carouselTimer); carouselTimer = null; } }
+    function resetAuto() { stopAuto(); startAuto(); }
+
+    // Pause on interaction
+    carousel.addEventListener('mouseenter', stopAuto);
+    carousel.addEventListener('mouseleave', startAuto);
+    carousel.addEventListener('touchstart', stopAuto, { passive: true });
+    carousel.addEventListener('touchend', () => setTimeout(startAuto, 1800), { passive: true });
+
+    // Keyboard arrows when carousel focused
+    carousel.setAttribute('tabindex', '0');
+    carousel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { nextSlide(); resetAuto(); }
+      if (e.key === 'ArrowLeft') { goToSlide((currentSlide-1+testimonials.length)%testimonials.length); resetAuto(); }
+    });
+
+    // Touch swipe support (light)
+    let startX = 0;
+    carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+    carousel.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 45) {
+        if (dx < 0) nextSlide(); else goToSlide((currentSlide-1+testimonials.length)%testimonials.length);
+        resetAuto();
+      }
+    }, {passive:true});
+
+    // Init
+    goToSlide(0);
+    startAuto();
+    log('Testimonials carousel initialized');
+  }
+
+  // =====================
   // SCROLL REVEAL (Premium subtle animations)
   // =====================
   function initScrollReveals() {
@@ -400,6 +589,12 @@
     wireGallery();
     wireForms();
 
+    // Testimonials carousel
+    initTestimonialsCarousel();
+
+    // Enhance lightbox with arrow nav
+    enhanceLightbox();
+
     // Scroll animations
     initScrollReveals();
 
@@ -417,7 +612,7 @@
       }
     }, { passive: true });
 
-    // Expose a couple of helpers for console/demo
+    // Expose helpers
     window.Lakeside = { showServiceModal, openBookingModal, openLightbox };
 
     log('Lakeside Harmony premium demo initialized — Bluegrass Digital Forge');

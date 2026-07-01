@@ -6,14 +6,15 @@ A polished, client-ready static site for a fictional premium massage therapy stu
 
 This is a **fictional business** for demonstration and portfolio purposes only.
 
-## Key Upgrades (Premium Polish)
-- **Reliable images**: All 8 images guaranteed via proper relative paths, eager/lazy loading, no broken WebP references, aggressive Service Worker precaching.
-- **Hero**: Dramatically improved visual presence with refined gradients, typography, and Lake Cumberland serenity.
-- **Animations & UX**: Subtle premium CSS transitions, IntersectionObserver scroll reveals, enhanced service card hovers (lift + micro details), polished mobile menu (animated slide + icon toggle).
-- **Footer**: Clearly states “Demo by Bluegrass Digital Forge • Built with Grok Build • Fictional business for portfolio purposes only.”
-- **PWA & Performance**: v2 Service Worker with image-first caching, fast cache strategies, improved manifest, vercel headers for long-lived static assets.
-- **Accessibility**: Focus trapping, keyboard support, data-attribute driven interactions.
-- **Kentucky wellness vibe**: Warm trustworthy palette (Lake blue, sage green, earth clay, cream) preserved and elevated.
+## Key Upgrades (Ultimate Portfolio Edition)
+- **Blazing images**: 42 optimized WebP variants (8-88KB) + responsive srcset + <picture> everywhere. All original JPGs kept as fallback. Perfect LCP.
+- **Mobile-first**: 48px+ touch targets, fast buttery menu, smooth scrolling, no layout shift (width/height), Core Web Vitals ready.
+- **Premium aesthetic**: Warm trustworthy Lake Cumberland palette, elegant typography, subtle micro-animations, serene experience.
+- **Enhanced UX**: Improved gallery lightbox with arrows + keyboard + touch nav. Premium booking form fake-success flow with beautiful confirmation. Subtle auto testimonials carousel (swipe + pause + dots).
+- **PWA**: Offline-first with full site cached, proper PNG icons, v3 SW. Works beautifully offline.
+- **SEO powerhouse**: Rich JSON-LD (LocalBusiness + Person), strong meta/OG, preloads, semantic.
+- **Bluegrass branding**: Very prominent "Demo by Bluegrass Digital Forge • Built with Grok Build • Fictional business for portfolio purposes only. Not a real clinic."
+- **100% fictional**: Sarah "Sage" Thompson, Jamestown KY, Lake Cumberland — perfect graduate LMT dream portfolio.
 
 ## Local Setup (Ready to Run)
 

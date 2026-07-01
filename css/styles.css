@@ -1,6 +1,7 @@
 /* css/styles.css
-   Premium styles for Lakeside Harmony Massage — Bluegrass Digital Forge portfolio
-   Warm, trustworthy Kentucky Lake Cumberland wellness aesthetic
+   Ultimate premium portfolio styles — Lakeside Harmony Massage
+   Bluegrass Digital Forge • Warm, trustworthy, serene Lake Cumberland aesthetic
+   Mobile-first • Core Web Vitals optimized • buttery smooth
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap');
@@ -12,11 +13,14 @@
   --cream: #F8F5F0;
   --deep: #1E3F47;
   --text: #2D3748;
+  --min-touch: 48px;
 }
 
-/* Base */
+/* Base + mobile-first */
+html { scroll-behavior: smooth; }
 .tail-container {
   font-family: 'Inter', system_ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .heading-serif {
@@ -38,16 +42,13 @@
 }
 
 .masssage-bg, .massage-bg {
-  background-image: linear-gradient(rgba(248, 245, 240, 0.90), rgba(248, 245, 240, 0.94)), url('../images/5.jpg');
+  background-image: linear-gradient(rgba(248, 245, 240, 0.90), rgba(248, 245, 240, 0.94)), url('../images/5.webp');
   background-size: cover;
   background-position: center;
 }
 
 /* Hero */
-.hero-bg {
-  background-size: cover;
-  background-position: center 28%;
-}
+.hero-bg { background-size: cover; background-position: center 28%; }
 
 /* Refined hero overlay for impact */
 .hero-overlay {
@@ -348,3 +349,103 @@ img {
     transform: none;
   }
 }
+
+/* =========================================
+   ULTIMATE POLISH: Mobile-first + Premium
+   ========================================= */
+
+/* Perfect touch targets (WCAG 2.2) */
+a, button, .service-card, .gallery-item, .benefit-card, 
+#mobile-menu a, select, input, textarea {
+  min-height: var(--min-touch);
+}
+button, .premium-btn, a[href^="tel"], .nav-link, .mobile-nav-link {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Buttery smooth base */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+button:active, .premium-btn:active {
+  transform: scale(0.985);
+  transition: transform 80ms ease;
+}
+
+/* Gallery lightbox polish */
+#lightbox img { transition: opacity 0.2s ease; }
+
+/* Testimonials carousel */
+#testimonial-carousel { 
+  background: #F8F5F0; 
+}
+#testimonial-track { will-change: transform; }
+#testimonial-dots button { transition: all 0.25s ease; }
+#testimonial-dots button:hover { transform: scale(1.15); }
+
+/* Booking form ultra clean states */
+form input:focus, form select:focus, form textarea:focus {
+  box-shadow: 0 0 0 3px rgba(42,95,110,0.08);
+  border-color: var(--lake-blue);
+}
+
+/* Fast image rendering + no layout shift helpers */
+img { 
+  image-rendering: -webkit-optimize-contrast; 
+  height: auto;
+}
+
+/* Premium micro button + card lift refinement */
+.premium-btn {
+  position: relative;
+  overflow: hidden;
+}
+.premium-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255,255,255,0.18), transparent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+.premium-btn:hover::after { opacity: 1; }
+
+/* Extra serene hover states */
+.service-card, .benefit-card, .gallery-item {
+  backface-visibility: hidden;
+}
+
+/* Footer branding stronger */
+.footer-strong { letter-spacing: 0.3px; }
+
+/* Mobile menu butter */
+#mobile-menu a { min-height: 52px; display: flex; align-items: center; }
+
+/* Responsive typography polish */
+@media (max-width: 640px) {
+  .heading-serif { font-size: clamp(2.1rem, 9vw, 3.1rem); }
+  h1.heading-serif { font-size: clamp(2.75rem, 11vw, 3.9rem); }
+}
+
+/* Desktop refinement */
+@media (min-width: 1024px) {
+  .service-card:hover { transform: translateY(-11px); }
+}
+
+/* PWA offline friendly hint */
+.offline-notice {
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+}
+
+/* Ensure no CLS on lazy images */
+.gallery-img, .service-card img, picture img {
+  display: block;
+}
+
+/* Extra trust polish */
+.stat { transition: all .35s cubic-bezier(0.23,1,0.32,1); }
