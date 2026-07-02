@@ -41,6 +41,23 @@
   let lastFocused = null;
   let untrap = null;
   let currentLightboxIndex = 0;
+  let scrollLockCount = 0;
+
+  function lockBodyScroll() {
+    scrollLockCount++;
+    if (scrollLockCount === 1) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function unlockBodyScroll() {
+    scrollLockCount = Math.max(0, scrollLockCount - 1);
+    if (scrollLockCount === 0) {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+  }
 
   // Services (matches cards)
   const services = [
@@ -180,6 +197,7 @@
     serviceModal.classList.remove('hidden');
     serviceModal.setAttribute('aria-hidden', 'false');
     lastFocused = document.activeElement;
+    lockBodyScroll();
 
     const first = serviceModal.querySelector('button');
     if (first) first.focus();
@@ -191,6 +209,7 @@
     if (!serviceModal) return;
     serviceModal.classList.add('hidden');
     serviceModal.setAttribute('aria-hidden', 'true');
+    unlockBodyScroll();
     if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
   };
@@ -217,8 +236,9 @@
     bookingModal.classList.remove('hidden');
     bookingModal.setAttribute('aria-hidden', 'false');
     lastFocused = document.activeElement;
+    lockBodyScroll();
     const firstField = bookingModal.querySelector('input, select');
-    if (firstField) setTimeout(() => firstField.focus(), 30);
+    if (firstField) setTimeout(() => firstField.focus(), 60);
     untrap = trapFocus(bookingModal);
   };
 
@@ -226,6 +246,7 @@
     if (!bookingModal) return;
     bookingModal.classList.add('hidden');
     bookingModal.setAttribute('aria-hidden', 'true');
+    unlockBodyScroll();
     if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
   };
@@ -261,6 +282,7 @@
     lightbox.setAttribute('aria-hidden', 'false');
     currentLightboxIndex = idx;
     lastFocused = document.activeElement;
+    lockBodyScroll();
     const closeBtn = lightbox.querySelector('button');
     if (closeBtn) setTimeout(() => closeBtn.focus(), 30);
     untrap = trapFocus(lightbox);
@@ -271,6 +293,7 @@
     lightbox.classList.add('hidden');
     lightbox.setAttribute('aria-hidden', 'true');
     lightboxImg.src = '';
+    unlockBodyScroll();
     if (untrap) { untrap(); untrap = null; }
     if (lastFocused) lastFocused.focus();
   };

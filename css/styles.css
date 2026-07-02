@@ -449,3 +449,130 @@ img {
 
 /* Extra trust polish */
 .stat { transition: all .35s cubic-bezier(0.23,1,0.32,1); }
+
+/* =========================================
+   BOOKING MODAL — Mobile perfection
+   Full-width comfortable sheet, large targets, no-zoom, scrollable, serene + dark friendly
+   ========================================= */
+
+/* Prevent iOS/Safari auto-zoom on form fields (critical for "zoomed" complaint) */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Booking modal sheet: premium bottom drawer on mobile + centered on desktop */
+#booking-modal .modal {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Nicer slide-up animation for mobile sheet (avoids scale "zoom" perception) */
+@media (max-width: 767px) {
+  #booking-modal .modal {
+    animation: bookingSheetEnter 0.32s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
+
+@keyframes bookingSheetEnter {
+  from {
+    opacity: 0;
+    transform: translateY(44px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Comfortable mobile padding + safe area + generous touch targets */
+@media (max-width: 767px) {
+  #booking-modal .modal {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 1.25rem;
+    padding-bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+    max-height: 92dvh;
+    max-height: 92vh; /* fallback */
+  }
+
+  /* Larger, easy tap inputs & selects inside the booking modal */
+  #booking-modal input,
+  #booking-modal select {
+    min-height: 52px;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    border-radius: 1rem;
+    /* already 16px from base rule; ensure no smaller */
+  }
+
+  #booking-modal button[type="submit"] {
+    min-height: 54px;
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+
+  /* Ensure stacked fields get breathing room */
+  #booking-modal .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+}
+
+/* Desktop / tablet refinements for modal */
+@media (min-width: 768px) {
+  #booking-modal .modal {
+    padding-bottom: 2.25rem;
+  }
+}
+
+/* Dark mode friendly (system dark or forced) — keeps premium serene feel */
+@media (prefers-color-scheme: dark) {
+  #booking-modal .modal {
+    background-color: #13252a;
+    color: #e8e2d9;
+  }
+  #booking-modal .modal input,
+  #booking-modal .modal select {
+    background-color: #1f343b;
+    color: #f0e9df;
+    border-color: #2a4a52;
+  }
+  #booking-modal .modal input:focus,
+  #booking-modal .modal select:focus {
+    background-color: #243d44;
+    border-color: #5f8a9a;
+  }
+  #booking-modal .modal p {
+    color: #b8b0a3;
+  }
+  #booking-modal .modal button[type="submit"] {
+    background-color: #3a7a8c;
+  }
+  #booking-modal .modal button[type="submit"]:hover {
+    background-color: #2a5f6e;
+  }
+  /* text color overrides for the few hard-coded classes */
+  #booking-modal .modal [class*="text-[#64748B]"],
+  #booking-modal .modal [class*="text-[#475569]"],
+  #booking-modal .modal .text-xs {
+    color: #9ca5a8 !important;
+  }
+}
+
+/* Improve global touch targets slightly for form controls & buttons in modal context */
+#booking-modal button,
+#booking-modal input,
+#booking-modal select {
+  touch-action: manipulation;
+}
+
+/* Make sure main booking form (non-modal) also benefits from no-zoom + decent touch on small screens */
+@media (max-width: 640px) {
+  #book input, #book select, #book textarea {
+    font-size: 16px !important;
+    min-height: 48px;
+  }
+}

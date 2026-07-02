@@ -935,26 +935,26 @@
   </div>
 
   <!-- BOOKING MODAL (quick) -->
-  <div id="booking-modal" onclick="if (event.target.id === 'booking-modal') closeBookingModal()" class="hidden fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="booking-form">
-    <div onclick="event.stopImmediatePropagation()" class="bg-white w-full md:max-w-lg md:rounded-3xl md:m-4 rounded-t-3xl modal p-7 pb-9">
-      <div class="flex justify-between items-center mb-2">
+  <div id="booking-modal" onclick="if (event.target.id === 'booking-modal') closeBookingModal()" class="hidden fixed inset-0 z-[90] bg-black/70 backdrop-blur-sm flex items-end md:items-center justify-center p-0 md:p-4" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="booking-modal-title">
+    <div onclick="event.stopImmediatePropagation()" class="bg-white w-full md:max-w-lg md:rounded-3xl md:m-4 rounded-t-3xl modal p-6 pb-8 md:p-7 md:pb-9 shadow-xl md:shadow-2xl overflow-y-auto md:overflow-visible">
+      <div class="flex justify-between items-center mb-1 md:mb-2">
         <div>
-          <span class="font-semibold text-xl">Book Now</span>
+          <span id="booking-modal-title" class="font-semibold text-xl tracking-tight">Book Now</span>
         </div>
-        <button onclick="closeBookingModal()" class="text-3xl text-[#9C9582] hover:text-black leading-none">×</button>
+        <button onclick="closeBookingModal()" class="p-2 -mr-2 -mt-1 text-3xl text-[#9C9582] hover:text-black active:text-[#1E3F47] leading-none touch-manipulation" aria-label="Close booking modal">×</button>
       </div>
-      <p class="text-sm mb-6 text-[#475569]">Quick booking. We’ll confirm your preferred time.</p>
+      <p class="text-sm mb-5 md:mb-6 text-[#475569]">Quick booking. We’ll confirm your preferred time.</p>
 
       <form id="quick-booking-form" onsubmit="handleQuickBooking(event)">
         <div class="space-y-4">
-          <input required type="text" id="q-name" placeholder="Full Name" class="w-full px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
-          
-          <div class="grid grid-cols-2 gap-4">
-            <input required type="email" id="q-email" placeholder="Email" class="px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
-            <input required type="tel" id="q-phone" placeholder="Phone" class="px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+          <input required type="text" id="q-name" placeholder="Full Name" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input required type="email" id="q-email" placeholder="Email" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+            <input required type="tel" id="q-phone" placeholder="Phone" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
           </div>
 
-          <select required id="q-service" class="w-full px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+          <select required id="q-service" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
             <option value="">Choose service</option>
             <option>Swedish Relaxation (60 min) — $95</option>
             <option>Deep Tissue (60 min) — $110</option>
@@ -964,9 +964,9 @@
             <option>Aromatherapy Ritual (60 min) — $100</option>
           </select>
 
-          <div class="grid grid-cols-2 gap-4">
-            <input required type="date" id="q-date" class="px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
-            <select required id="q-time" class="px-4 py-3 bg-[#F8F5F0] rounded-2xl text-sm border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input required type="date" id="q-date" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
+            <select required id="q-time" class="w-full px-4 py-3.5 bg-[#F8F5F0] rounded-2xl text-[16px] border border-transparent focus:bg-white focus:border-[#2A5F6E] outline-none">
               <option value="">Time</option>
               <option>9:00 AM</option>
               <option>10:30 AM</option>
@@ -976,9 +976,9 @@
             </select>
           </div>
         </div>
-        
-        <button type="submit" class="mt-6 w-full py-[15px] bg-[#2A5F6E] hover:bg-[#1E3F47] text-white text-sm font-semibold rounded-3xl">CONFIRM REQUEST</button>
-        <div class="text-xs text-center text-[#64748B] mt-3">Or call <a href="tel:+12705550192" class="font-semibold text-[#2A5F6E]">(270) 555-0192</a></div>
+
+        <button type="submit" class="mt-6 w-full py-4 bg-[#2A5F6E] hover:bg-[#1E3F47] active:bg-[#1E3F47] text-white text-[15px] font-semibold rounded-3xl touch-manipulation min-h-[52px]">CONFIRM REQUEST</button>
+        <div class="text-xs text-center text-[#64748B] mt-3">Or call <a href="tel:+12705550192" class="font-semibold text-[#2A5F6E] active:underline">(270) 555-0192</a></div>
       </form>
     </div>
   </div>
